@@ -1,0 +1,54 @@
+<p>dynamic-form works!</p>
+<form
+  class="dynamic-form"
+  [formGroup]="formParent"
+  (submit)="handleSubmit($event)"
+>
+  <ng-container *ngFor="let field of fieldConfigs">
+    <label>{{ field.label }}</label>
+
+    <div [ngSwitch]="field.type">
+      <input
+        *ngSwitchCase="'text'"        
+        [disabled]="field.disabled"
+        [value]="field.value"
+        [id]="field.name"
+        [type]="field.type"
+        [placeholder]="field.placeholder"   
+             
+      />
+
+      <!-- <select [id]="field.name" *ngSwitchCase="'dropdown'" [formControlName]="field.name">
+          <option *ngFor="let opt of field.options" [value]="opt.name">{{opt.value}}</option>
+        </select> -->
+    </div>
+  </ng-container>
+  <div class="form-group" *ngIf="errors">
+    <div class="fge-dynamic-form--error" *ngFor="let error of errors">
+      <i class="fas fa-exclamation-circle pr-1"></i>
+      {{ error }}
+    </div>
+  </div>
+  <div class="fge-dynamic-field form-button">
+    <button
+      class="fge-dynamic-form__button btn-primary bg-secondary ml-auto"
+      type="submit"
+      (mousedown)="handleSaveAction($event)"
+      [disabled]="loadingAsyncResponse"
+    >
+      Save
+      <i
+        *ngIf="loadingAsyncResponse"
+        class="fas fa-circle-notch fa-spin px-1"
+      ></i>
+    </button>
+    <button
+      type="button"
+      class="fge-dynamic-form__button btn-secondary fge-dynamic-form__button--cancel ml-2"
+      (mousedown)="handleCancel($event)"
+      [disabled]="loadingAsyncResponse"
+    >
+      Cancel
+    </button>
+  </div>
+</form>
