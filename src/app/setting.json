@@ -1,0 +1,16 @@
+{
+  "data": {
+    "id": 0,
+    "settingGroupId": 0,
+    "name": "string",
+    "description": "string",
+    "value": "string",
+    "dataType": "string",
+    "enumDataType": "string",
+    "validationPattern": "string",
+    "version": 0,
+    "publishDate": "2023-05-30T19:23:44.112Z",
+    "inherited": true,
+    "status": "Inactive"
+  }
+}

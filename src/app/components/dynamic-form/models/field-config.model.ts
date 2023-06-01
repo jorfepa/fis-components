@@ -12,6 +12,7 @@ export class FieldConfig {
   filename?: string;
   focus?: boolean;
   validation?: {
-    [key: string]: { errorMsg: string; validator: ValidatorFn | ValidatorFn[] };
+    errorMsg: string;
+    validator: ValidatorFn[];
   };
 }

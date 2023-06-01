@@ -1,54 +1,44 @@
-<p>dynamic-form works!</p>
-<form
-  class="dynamic-form"
-  [formGroup]="formParent"
-  (submit)="handleSubmit($event)"
->
-  <ng-container *ngFor="let field of fieldConfigs">
-    <label>{{ field.label }}</label>
+<div class="main-wrapper">
+  <div class="wrapper">
 
-    <div [ngSwitch]="field.type">
-      <input
-        *ngSwitchCase="'text'"        
-        [disabled]="field.disabled"
-        [value]="field.value"
-        [id]="field.name"
-        [type]="field.type"
-        [placeholder]="field.placeholder"   
-             
-      />
+    <form [formGroup]="formParent" class="form-parent">
+      <ng-container *ngFor="let item of fieldConfigs">
+        <div class="form-field" *ngIf="item.type=='text'">
+          <label>{{item.label}}</label>
+          <input [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
+        </div>
+        <div class="form-field" *ngIf="item.type=='select'">
+          <label>{{item.label}}</label>
+          <select [formControlName]="item.name" (change)="onDataTypeChange($event)">
+            <ng-container *ngFor="let option of item.options">
+              <option [value]="option">{{option}}</option>
+            </ng-container>
+          </select>
+          <div class="form-grid" formArrayName="child">
 
-      <!-- <select [id]="field.name" *ngSwitchCase="'dropdown'" [formControlName]="field.name">
-          <option *ngFor="let opt of field.options" [value]="opt.name">{{opt.value}}</option>
-        </select> -->
-    </div>
-  </ng-container>
-  <div class="form-group" *ngIf="errors">
-    <div class="fge-dynamic-form--error" *ngFor="let error of errors">
-      <i class="fas fa-exclamation-circle pr-1"></i>
-      {{ error }}
-    </div>
+            <div class="form-field" *ngFor="let child of getCtrl('child',formParent).controls;index as formChild">
+              <div class="form-block" [formGroupName]="formChild" *ngIf="selectedType==sett.string.name">
+                <div class="form-field">
+                  <input type="text" formControlName="String" [pattern]="sett.string.validationPattern">
+                </div>
+                <label> 
+                  Pattern: {{sett.string.validationPattern}}
+               </label> 
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </ng-container>
+    </form>
+
   </div>
-  <div class="fge-dynamic-field form-button">
-    <button
-      class="fge-dynamic-form__button btn-primary bg-secondary ml-auto"
-      type="submit"
-      (mousedown)="handleSaveAction($event)"
-      [disabled]="loadingAsyncResponse"
-    >
-      Save
-      <i
-        *ngIf="loadingAsyncResponse"
-        class="fas fa-circle-notch fa-spin px-1"
-      ></i>
-    </button>
-    <button
-      type="button"
-      class="fge-dynamic-form__button btn-secondary fge-dynamic-form__button--cancel ml-2"
-      (mousedown)="handleCancel($event)"
-      [disabled]="loadingAsyncResponse"
-    >
-      Cancel
-    </button>
+  <div class="wrapper">
+    <div><b>The form is valid?: </b>
+      <span *ngIf="formParent.valid">✔</span>
+      <span *ngIf="!formParent.valid">🔴</span>
+    </div>
+    <pre>{{formParent.value | json}}</pre>
   </div>
-</form>
+</div>

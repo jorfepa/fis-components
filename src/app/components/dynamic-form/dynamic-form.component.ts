@@ -5,9 +5,12 @@ import {
   FormArray,
   Validators,
   ValidatorFn,
+  AbstractControl,
+  ValidationErrors
 } from '@angular/forms';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FieldConfig } from './models/field-config.model';
+//import { this.sett } from.name './helpers/data-types';
 
 @Component({
   selector: 'fgeDynamicField',
@@ -16,59 +19,97 @@ import { FieldConfig } from './models/field-config.model';
 })
 export class DynamicFormComponent implements OnInit {
   @Input() fieldConfigs: FieldConfig[] = [];
+  @Input() settingDataTypes: any[] = [];
   @Output() readonly onsubmit: EventEmitter<any> = new EventEmitter<any>();
   @Output() readonly oncancel: EventEmitter<any> = new EventEmitter<any>();
-  loadingAsyncResponse: boolean = false;
+
   public formParent: FormGroup = new FormGroup({});
-  errors: string[] = [];
+  selectedType: string = '';
+  //dataTypes = this.sett;
+  // errors.name: string[] = [];
 
-  get controls(): any {
-    return this.fieldConfigs.filter(
-      (fieldConfig: FieldConfig) => fieldConfig && fieldConfig.type !== 'button'
-    );
-  }
-  get changes() {
-    return this.formParent.valueChanges;
-  }
-  get valid() {
-    return this.formParent.valid;
-  }
-  get value() {
-    return this.formParent.value;
-  }
-  get currentForm() {
-    return this.formParent;
-  }
+  constructor() { }
 
-  constructor(private fb: FormBuilder) {}
-
+  sett: any;
   ngOnInit(): void {
+    this.sett = this.settingDataTypes.reduce((acc, item) => {
+      acc[item.name.toLowerCase()] = item;
+      return acc;
+    }, {});
     this.initFormParent();
   }
 
   initFormParent(): void {
-    if (this.formParent) {
-      this.fieldConfigs.forEach((control) => {
-        this.formParent.addControl('', this.createControl(control));
-      });
-      console.log(this.fieldConfigs);
-      console.log("🚀 ~ file: dynamic-form.component.ts:53 ~ DynamicFormComponent ~ this.fieldConfigs.forEach ~ formParent:", this.formParent)
+    let form = new FormGroup({});
+    this.fieldConfigs.forEach((control) => {
+      form.addControl(control.name, new FormControl({ value: control.value, disabled: control.disabled }, control.validation?.validator));
+    });
+    form.addControl('child', new FormArray([], [Validators.required]));
+    this.formParent = form;
+  }
+
+  loadData() {
+    this.formParent.patchValue(this.fieldConfigs);
+  }
+
+  initFormChild(childField: any) {
+    let formChild = new FormGroup({});
+    const field = this.fieldConfigs.find(f => f.type == 'text');
+    formChild.addControl(childField.name, new FormControl({ value: field?.value, disabled: field?.disabled }, [Validators.required]));
+    return formChild;
+  }
+
+  getCtrl(key: string, form: FormGroup): any {
+    return form.get(key);
+  }
+
+  onDataTypeChange(ev: any) {
+    this.selectedType = ev.target.value;
+    switch (this.selectedType) {
+      case this.sett.string.name:
+        const refChild = this.formParent.get('child') as FormArray;
+        refChild.clear();
+        refChild.push(this.initFormChild(this.sett.string));
+        break;
+      case this.sett.boolean.name:
+
+        break;
+      case this.sett.date.name:
+
+        break;
+      case this.sett.decimal.name:
+
+        break;
+      case this.sett.integer.name:
+
+        break;
+      case this.sett.json.name:
+
+        break;
+      case this.sett.privateFile.name:
+
+        break;
+      case this.sett.stringEnum.name:
+
+        break;
+      case this.sett.timespan.name:
+
+        break;
+
+      default:
+        console.log(this.sett.string.name);
+        break;
     }
   }
 
-  createControl(config: FieldConfig) {
-    const { disabled, validation, value, name } = config;
-    return this.fb.control({ disabled, value, name }, validation);
-  }
-
-  handleSubmit(event: Event) {
+  /* handleSubmit(event: Event) {
     console.log(event, this.formParent);
     event.preventDefault();
     event.stopPropagation();
     if (this.formParent.valid) {
       this.resetAsyncFlags();
       this.onsubmit.emit({
-        value: this.value,
+        //value: this.value,
         success: this.asyncSuccess.bind(this),
         error: this.asyncError.bind(this),
       });
@@ -142,5 +183,5 @@ export class DynamicFormComponent implements OnInit {
           this.validateAllFormFields(control);
         }
       });
-  }
+  } */
 }

@@ -1,66 +1,90 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FieldConfig } from './components/dynamic-form/models/field-config.model';
 import { Validators } from '@angular/forms';
+
+import settingsData from './settings.json';
+import settingDataTypes from './dataTypes.json';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  fieldConfigs: FieldConfig[] = [
-    {
-      disabled: false,
-      label: 'label',
-      name: 'name',
-      options: ['opt1', 'opt2'],
-      placeholder: 'placeholder',
-      type: 'text',
-      value: 'value1',
-      src: 'scr',
-      filename: 'filename',
-      focus: false,
-      validation: {
-        val1: {
+export class AppComponent implements OnInit {
+  dataTypes = settingDataTypes.data.items;
+  types: string[] = [];
+
+  ngOnInit(): void {
+    settingDataTypes.data.items.forEach(type => {
+        this.types.push(type.name);
+    });
+    /* this.data.forEach(element => {
+      this.fieldConfigs.push({
+        disabled: false,
+        label: 'name',
+        name: 'name',
+        options: ['opt1', 'opt2'],
+        placeholder: 'Name',
+        type: 'text',
+        value: 'value1',
+        src: '',
+        filename: '',
+        focus: true,
+        validation: {
           errorMsg: 'errorMsg',
           validator: [Validators.required],
         },
+      });
+    }); */
+  }
+
+  fieldConfigs: FieldConfig[] = [
+    {
+      disabled: false,
+      label: 'Name',
+      name: 'name',
+      options: [],
+      placeholder: 'Name',
+      type: 'text',
+      value: 'John Doe',
+      src: '',
+      filename: '',
+      focus: true,
+      validation: {
+        errorMsg: 'errorMsg',
+        validator: [Validators.required],
       },
     },
     {
       disabled: true,
-      label: 'label2_prueba',
-      name: 'name2',
-      options: ['opt1', 'opt2'],
-      placeholder: 'placeholder2',
+      label: 'Description',
+      name: 'description',
+      options: [],
+      placeholder: 'Description',
       type: 'text',
-      value: 'value2',
-      src: 'scr2',
-      filename: 'filename2',
+      value: '',
+      src: '',
+      filename: '',
       focus: false,
       validation: {
-        val1: {
-          errorMsg: 'errorMsg',
-          validator: [Validators.required],
-        },
+        errorMsg: 'errorMsg',
+        validator: [Validators.required],
       },
     },
     {
       disabled: false,
-      label: 'label3',
-      name: 'name3',
-      options: ['opt1', 'opt2'],
-      placeholder: 'placeholder3',
-      type: 'text',
-      value: 'value3',
-      src: 'scr3',
-      filename: 'filename3',
+      label: 'Data Type',
+      name: 'dataType',
+      options: this.types,
+      placeholder: 'Choose data type',
+      type: 'select',
+      value: '',
+      src: '',
+      filename: '',
       focus: false,
       validation: {
-        val1: {
-          errorMsg: 'errorMsg',
-          validator: [Validators.required],
-        },
+        errorMsg: 'errorMsg',
+        validator: [Validators.required],
       },
     },
   ];

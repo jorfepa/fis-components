@@ -1,0 +1,34 @@
+{
+  "data": {
+    "items": [
+      {
+        "id": 0,
+        "settingGroupId": 0,
+        "name": "name1",
+        "description": "string",
+        "value": "string",
+        "dataType": "text",
+        "enumDataType": "string",
+        "validationPattern": "string",
+        "version": 0,
+        "publishDate": "2023-05-26T13:43:37.924Z",
+        "inherited": true,
+        "status": "Inactive"
+      },
+      {
+        "id": 0,
+        "settingGroupId": 0,
+        "name": "name2",
+        "description": "string",
+        "value": "string",
+        "dataType": "text",
+        "enumDataType": "string",
+        "validationPattern": "string",
+        "version": 0,
+        "publishDate": "2023-05-26T13:43:37.924Z",
+        "inherited": true,
+        "status": "Inactive"
+      }
+    ]
+  }
+}
