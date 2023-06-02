@@ -11,6 +11,7 @@ export class FieldConfig {
   src?: string;
   filename?: string;
   focus?: boolean;
+  isStatic: boolean;
   validation?: {
     errorMsg: string;
     validator: ValidatorFn[];

@@ -4,7 +4,7 @@
             {
                 "id": 1,
                 "name": "String",
-                "validationPattern": "^[-]?[0-9]{1,19}$",
+                "validationPattern": null,
                 "_links": []
             },
             {

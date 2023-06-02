@@ -1,16 +1,12 @@
 import {
   FormGroup,
-  FormBuilder,
   FormControl,
-  FormArray,
   Validators,
-  ValidatorFn,
-  AbstractControl,
-  ValidationErrors
+  AbstractControl
 } from '@angular/forms';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChildren } from '@angular/core';
 import { FieldConfig } from './models/field-config.model';
-//import { this.sett } from.name './helpers/data-types';
+import _ from 'lodash';
 
 @Component({
   selector: 'fgeDynamicField',
@@ -23,10 +19,11 @@ export class DynamicFormComponent implements OnInit {
   @Output() readonly onsubmit: EventEmitter<any> = new EventEmitter<any>();
   @Output() readonly oncancel: EventEmitter<any> = new EventEmitter<any>();
 
+  @ViewChildren('formField') refFormField: ElementRef;
+
   public formParent: FormGroup = new FormGroup({});
   selectedType: string = '';
-  //dataTypes = this.sett;
-  // errors.name: string[] = [];
+  optionIndex: number = 0;
 
   constructor() { }
 
@@ -42,65 +39,35 @@ export class DynamicFormComponent implements OnInit {
   initFormParent(): void {
     let form = new FormGroup({});
     this.fieldConfigs.forEach((control) => {
+      console.log(control);
       form.addControl(control.name, new FormControl({ value: control.value, disabled: control.disabled }, control.validation?.validator));
     });
-    form.addControl('child', new FormArray([], [Validators.required]));
     this.formParent = form;
   }
 
-  loadData() {
-    this.formParent.patchValue(this.fieldConfigs);
-  }
-
-  initFormChild(childField: any) {
-    let formChild = new FormGroup({});
-    const field = this.fieldConfigs.find(f => f.type == 'text');
-    formChild.addControl(childField.name, new FormControl({ value: field?.value, disabled: field?.disabled }, [Validators.required]));
-    return formChild;
-  }
-
-  getCtrl(key: string, form: FormGroup): any {
-    return form.get(key);
-  }
-
+  selectedDataType: any;
+  DYNAMIC_FIELD = 'field';
   onDataTypeChange(ev: any) {
-    this.selectedType = ev.target.value;
-    switch (this.selectedType) {
-      case this.sett.string.name:
-        const refChild = this.formParent.get('child') as FormArray;
-        refChild.clear();
-        refChild.push(this.initFormChild(this.sett.string));
-        break;
-      case this.sett.boolean.name:
-
-        break;
-      case this.sett.date.name:
-
-        break;
-      case this.sett.decimal.name:
-
-        break;
-      case this.sett.integer.name:
-
-        break;
-      case this.sett.json.name:
-
-        break;
-      case this.sett.privateFile.name:
-
-        break;
-      case this.sett.stringEnum.name:
-
-        break;
-      case this.sett.timespan.name:
-
-        break;
-
-      default:
-        console.log(this.sett.string.name);
-        break;
+    this.selectedDataType = _.compact(this.settingDataTypes.map(items => items.name == ev.target.value ? items : null))[0];
+    // this.fieldConfigs[3].type = this.selectedType;
+    //this.formParent.removeControl('String');
+    const selectedfield = this.fieldConfigs.find(field=>!field.isStatic);
+    console.log(this.getControlName(this.formParent.get(selectedfield.name)));
+    this.formParent.get('String')?.clearValidators();
+    this.formParent.get('String')?.updateValueAndValidity();
+    this.formParent.get('String')?.addValidators(Validators.required);
+    if (this.selectedDataType.validationPattern != null && this.selectedDataType.name != this.sett.date.name && this.selectedDataType.name != this.sett.boolean.name) {
+      this.formParent.get('String')?.addValidators(Validators.pattern(this.selectedDataType.validationPattern));
     }
+    setTimeout(() => {
+      document.getElementById(this.selectedDataType.name).focus();
+    }, 200);
   }
+
+  getControlName(c: AbstractControl): string | null {
+    const formGroup = c.parent.controls;
+    return Object.keys(formGroup).find(name => c === formGroup[name]) || null;
+}
 
   /* handleSubmit(event: Event) {
     console.log(event, this.formParent);

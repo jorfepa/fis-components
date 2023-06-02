@@ -1,35 +1,53 @@
 <div class="main-wrapper">
   <div class="wrapper">
 
-    <form [formGroup]="formParent" class="form-parent">
+    <form [formGroup]="formParent" class="form-parent" >
       <ng-container *ngFor="let item of fieldConfigs">
-        <div class="form-field" *ngIf="item.type=='text'">
+
+        <div class="form-field" *ngIf="item.type=='String'">
           <label>{{item.label}}</label>
-          <input [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
+          <input [name]="item.name" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
         </div>
-        <div class="form-field" *ngIf="item.type=='select'">
+
+        <div class="form-field" *ngIf="item.type=='Select'">
           <label>{{item.label}}</label>
-          <select [formControlName]="item.name" (change)="onDataTypeChange($event)">
+          <select [formControlName]="item.name" placeholder="Select an Item" (change)="onDataTypeChange($event)">
             <ng-container *ngFor="let option of item.options">
               <option [value]="option">{{option}}</option>
             </ng-container>
           </select>
-          <div class="form-grid" formArrayName="child">
-
-            <div class="form-field" *ngFor="let child of getCtrl('child',formParent).controls;index as formChild">
-              <div class="form-block" [formGroupName]="formChild" *ngIf="selectedType==sett.string.name">
-                <div class="form-field">
-                  <input type="text" formControlName="String" [pattern]="sett.string.validationPattern">
-                </div>
-                <label> 
-                  Pattern: {{sett.string.validationPattern}}
-               </label> 
-              </div>
-
-            </div>
-
-          </div>
         </div>
+
+        <div class="form-field" *ngIf="item.type=='Boolean'">
+          <label>{{item.label}}-boolean</label>
+          <input [name]="item.name" [id]="selectedType" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
+        </div>
+
+        <div class="form-field" *ngIf="item.type=='Integer'">
+          <label>{{item.label}}</label>
+          <input [name]="item.name" [id]="selectedType" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
+        </div>
+
+        <div class="form-field" *ngIf="item.type=='Decimal'">
+          <label>{{item.label}}</label>
+          <input [name]="item.name" [id]="selectedType" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
+        </div>
+
+        <div class="form-field" *ngIf="item.type=='Date'">
+          <label>{{item.label}}</label>
+          <input [name]="item.name" [id]="selectedType" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
+        </div>
+
+        <div class="form-field" *ngIf="item.type=='Json'">
+          <label>{{item.label}}</label>
+          <textarea [name]="item.name" [id]="selectedType" [placeholder]="item.placeholder" [formControlName]="item.name" cols="30" rows="8"></textarea>
+        </div>
+
+        <div class="form-field" *ngIf="item.type=='StringEnum'">
+          <label>{{item.label}}</label>
+          <textarea [name]="item.name" [id]="selectedType" [placeholder]="item.placeholder" [formControlName]="item.name" cols="30" rows="8"></textarea>
+        </div>
+
       </ng-container>
     </form>
 
