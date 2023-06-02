@@ -22,52 +22,57 @@ export class DynamicFormComponent implements OnInit {
   @ViewChildren('formField') refFormField: ElementRef;
 
   public formParent: FormGroup = new FormGroup({});
-  selectedType: string = '';
-  optionIndex: number = 0;
+
+  fieldName = '';
+  selectedDataType: any;
+  dataTypes: any;
 
   constructor() { }
 
-  sett: any;
   ngOnInit(): void {
-    this.sett = this.settingDataTypes.reduce((acc, item) => {
+    this.dataTypes = this.settingDataTypes.reduce((acc, item) => {
       acc[item.name.toLowerCase()] = item;
       return acc;
     }, {});
     this.initFormParent();
+    console.log(this.dataTypes);
   }
 
   initFormParent(): void {
     let form = new FormGroup({});
     this.fieldConfigs.forEach((control) => {
-      console.log(control);
       form.addControl(control.name, new FormControl({ value: control.value, disabled: control.disabled }, control.validation?.validator));
+      if (!control.isStatic) {
+        this.fieldName = control.name;
+      }
     });
     this.formParent = form;
   }
 
-  selectedDataType: any;
-  DYNAMIC_FIELD = 'field';
   onDataTypeChange(ev: any) {
-    this.selectedDataType = _.compact(this.settingDataTypes.map(items => items.name == ev.target.value ? items : null))[0];
-    // this.fieldConfigs[3].type = this.selectedType;
-    //this.formParent.removeControl('String');
-    const selectedfield = this.fieldConfigs.find(field=>!field.isStatic);
-    console.log(this.getControlName(this.formParent.get(selectedfield.name)));
-    this.formParent.get('String')?.clearValidators();
-    this.formParent.get('String')?.updateValueAndValidity();
-    this.formParent.get('String')?.addValidators(Validators.required);
-    if (this.selectedDataType.validationPattern != null && this.selectedDataType.name != this.sett.date.name && this.selectedDataType.name != this.sett.boolean.name) {
-      this.formParent.get('String')?.addValidators(Validators.pattern(this.selectedDataType.validationPattern));
+    this.selectedDataType = this.settingDataTypes.find(items => items.name == ev.target.value);
+    const selectedfield = this.fieldConfigs.find(field => !field.isStatic);
+
+    this.formParent.removeControl(this.fieldName);
+    this.formParent.addControl(this.selectedDataType.name, new FormControl({ value: '', disabled: false }, []));
+    selectedfield.name = this.selectedDataType.name;
+    selectedfield.type = this.selectedDataType.name;
+    this.fieldName = this.selectedDataType.name;
+    this.formParent.get(this.fieldName)?.addValidators(Validators.required);
+    if (this.selectedDataType.validationPattern != null && this.selectedDataType.name != this.dataTypes.date.name && this.selectedDataType.name != this.dataTypes.boolean.name) {
+      this.formParent.get(this.fieldName)?.addValidators(Validators.pattern(this.selectedDataType.validationPattern));
     }
+
     setTimeout(() => {
-      document.getElementById(this.selectedDataType.name).focus();
+      document.getElementById(this.fieldName).focus();
     }, 200);
+
   }
 
   getControlName(c: AbstractControl): string | null {
     const formGroup = c.parent.controls;
     return Object.keys(formGroup).find(name => c === formGroup[name]) || null;
-}
+  }
 
   /* handleSubmit(event: Event) {
     console.log(event, this.formParent);

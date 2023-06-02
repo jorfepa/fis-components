@@ -4,48 +4,61 @@
     <form [formGroup]="formParent" class="form-parent" >
       <ng-container *ngFor="let item of fieldConfigs">
 
-        <div class="form-field" *ngIf="item.type=='String'">
+        <div class="form-field" *ngIf="item.type==dataTypes.string.name">
           <label>{{item.label}}</label>
-          <input [name]="item.name" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
+          <input [id]="item.name" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
         </div>
 
         <div class="form-field" *ngIf="item.type=='Select'">
           <label>{{item.label}}</label>
-          <select [formControlName]="item.name" placeholder="Select an Item" (change)="onDataTypeChange($event)">
+          <select [id]="item.name" [formControlName]="item.name" placeholder="Select an Item" (change)="onDataTypeChange($event)">
             <ng-container *ngFor="let option of item.options">
               <option [value]="option">{{option}}</option>
             </ng-container>
           </select>
         </div>
 
-        <div class="form-field" *ngIf="item.type=='Boolean'">
+        <div class="form-field" *ngIf="item.type==dataTypes.boolean.name">
           <label>{{item.label}}-boolean</label>
-          <input [name]="item.name" [id]="selectedType" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
+          <select [id]="item.name" [formControlName]="item.name" placeholder="Select an Item">
+            <option [value]="true">true</option>            
+            <option [value]="false">false</option>            
+          </select>
         </div>
 
-        <div class="form-field" *ngIf="item.type=='Integer'">
+        <div class="form-field" *ngIf="item.type==dataTypes.integer.name">
           <label>{{item.label}}</label>
-          <input [name]="item.name" [id]="selectedType" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
+          <input [id]="item.name" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
         </div>
 
-        <div class="form-field" *ngIf="item.type=='Decimal'">
+        <div class="form-field" *ngIf="item.type==dataTypes.decimal.name">
           <label>{{item.label}}</label>
-          <input [name]="item.name" [id]="selectedType" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
+          <input [id]="item.name" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
         </div>
 
-        <div class="form-field" *ngIf="item.type=='Date'">
+        <div class="form-field" *ngIf="item.type==dataTypes.date.name">
           <label>{{item.label}}</label>
-          <input [name]="item.name" [id]="selectedType" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
+          <input [id]="item.name" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
         </div>
 
-        <div class="form-field" *ngIf="item.type=='Json'">
+        <div class="form-field" *ngIf="item.type==dataTypes.json.name">
           <label>{{item.label}}</label>
-          <textarea [name]="item.name" [id]="selectedType" [placeholder]="item.placeholder" [formControlName]="item.name" cols="30" rows="8"></textarea>
+          <textarea [id]="item.name" [placeholder]="item.placeholder" [formControlName]="item.name" cols="30" rows="8"></textarea>
         </div>
 
-        <div class="form-field" *ngIf="item.type=='StringEnum'">
+        <div class="form-field" *ngIf="item.type==dataTypes.stringenum.name">
           <label>{{item.label}}</label>
-          <textarea [name]="item.name" [id]="selectedType" [placeholder]="item.placeholder" [formControlName]="item.name" cols="30" rows="8"></textarea>
+          <textarea [id]="item.name" [placeholder]="item.placeholder" [formControlName]="item.name" cols="30" rows="8"></textarea>
+        </div>
+
+        <div class="form-field" *ngIf="item.type==dataTypes.privatefile.name">
+          <label>{{item.label}}</label>
+          <input type="file" [id]="item.name" [formControlName]="item.name">
+        </div>
+
+        <div class="form-field" *ngIf="item.type==dataTypes.timespan.name">
+          <label>{{item.label}}</label>
+          <input [id]="item.name" type="time" [placeholder]="item.placeholder" [formControlName]="item.name">
         </div>
 
       </ng-container>
