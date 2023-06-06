@@ -15,8 +15,8 @@ export class AppComponent implements OnInit {
   types: string[] = [];
 
   ngOnInit(): void {
-    settingDataTypes.data.items.forEach(type => {
-        this.types.push(type.name);
+    settingDataTypes.data.items.forEach((type) => {
+      this.types.push(type.name);
     });
     /* this.data.forEach(element => {
       this.fieldConfigs.push({
@@ -36,6 +36,14 @@ export class AppComponent implements OnInit {
         },
       });
     }); */
+  }
+
+  submit(data: any) {
+    console.log(data);
+  }
+
+  cancel() {
+    console.log('Cancel');
   }
 
   fieldConfigs: FieldConfig[] = [

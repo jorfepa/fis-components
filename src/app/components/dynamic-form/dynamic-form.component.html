@@ -1,75 +1,186 @@
-<div class="main-wrapper">
-  <div class="wrapper">
+<form class="form" [formGroup]="formParent" (submit)="handleSubmit()">
+  <ng-container *ngFor="let item of fieldConfigs">
+    <div class="form-field" *ngIf="item.type == dataTypes.string.name">
+      <label>{{ item.label }}</label>
+      <input
+        class="form-control"
+        [id]="item.name"
+        [type]="item.type"
+        [placeholder]="item.placeholder"
+        [formControlName]="item.name"
+        [ngClass]="{ 'field-error': hasErrors(item.name) }"
+      />
+    </div>
 
-    <form [formGroup]="formParent" class="form-parent" >
-      <ng-container *ngFor="let item of fieldConfigs">
+    <div class="form-field" *ngIf="item.type == 'Select'">
+      <label>{{ item.label }}</label>
+      <select
+        class="form-select"
+        [id]="item.name"
+        [formControlName]="item.name"
+        [ngClass]="{ 'field-error': hasErrors(item.name) }"
+        placeholder="Select an Item"
+        (change)="onDataTypeChange($event)"
+      >
+        <ng-container *ngFor="let option of item.options">
+          <option [value]="option">{{ option }}</option>
+        </ng-container>
+      </select>
+    </div>
 
-        <div class="form-field" *ngIf="item.type==dataTypes.string.name">
-          <label>{{item.label}}</label>
-          <input [id]="item.name" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
-        </div>
+    <div class="form-field" *ngIf="item.type == dataTypes.boolean.name">
+      <label>{{ item.label }}</label>
+      <select
+        class="form-select"
+        [id]="item.name"
+        [formControlName]="item.name"
+        placeholder="Select an Item"
+        [ngClass]="{ 'field-error': hasErrors(item.name) }"
+      >
+        <option [value]="true">true</option>
+        <option [value]="false">false</option>
+      </select>
+    </div>
 
-        <div class="form-field" *ngIf="item.type=='Select'">
-          <label>{{item.label}}</label>
-          <select [id]="item.name" [formControlName]="item.name" placeholder="Select an Item" (change)="onDataTypeChange($event)">
-            <ng-container *ngFor="let option of item.options">
-              <option [value]="option">{{option}}</option>
-            </ng-container>
-          </select>
-        </div>
+    <div class="form-field" *ngIf="item.type == dataTypes.integer.name">
+      <label>{{ item.label }}</label>
+      <input
+        class="form-control"
+        [id]="item.name"
+        [type]="item.type"
+        [placeholder]="item.placeholder"
+        [formControlName]="item.name"
+        [ngClass]="{ 'field-error': hasErrors(item.name) }"
+      />
+    </div>
 
-        <div class="form-field" *ngIf="item.type==dataTypes.boolean.name">
-          <label>{{item.label}}-boolean</label>
-          <select [id]="item.name" [formControlName]="item.name" placeholder="Select an Item">
-            <option [value]="true">true</option>            
-            <option [value]="false">false</option>            
-          </select>
-        </div>
+    <div class="form-field" *ngIf="item.type == dataTypes.decimal.name">
+      <label>{{ item.label }}</label>
+      <input
+        class="form-control"
+        [id]="item.name"
+        [type]="item.type"
+        [placeholder]="item.placeholder"
+        [formControlName]="item.name"
+        [ngClass]="{ 'field-error': hasErrors(item.name) }"
+      />
+    </div>
 
-        <div class="form-field" *ngIf="item.type==dataTypes.integer.name">
-          <label>{{item.label}}</label>
-          <input [id]="item.name" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
-        </div>
+    <div class="form-field" *ngIf="item.type == dataTypes.date.name">
+      <label>{{ item.label }}</label>
+      <input
+        class="form-control"
+        [id]="item.name"
+        [type]="item.type"
+        [placeholder]="item.placeholder"
+        [formControlName]="item.name"
+        [ngClass]="{ 'field-error': hasErrors(item.name) }"
+      />
+    </div>
 
-        <div class="form-field" *ngIf="item.type==dataTypes.decimal.name">
-          <label>{{item.label}}</label>
-          <input [id]="item.name" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
-        </div>
+    <div class="form-field" *ngIf="item.type == dataTypes.json.name">
+      <label>{{ item.label }}</label>
+      <textarea
+        class="form-control"
+        [id]="item.name"
+        [placeholder]="item.placeholder"
+        [formControlName]="item.name"
+        [ngClass]="{ 'field-error': hasErrors(item.name) }"
+        cols="30"
+        rows="8"
+      ></textarea>
+    </div>
 
-        <div class="form-field" *ngIf="item.type==dataTypes.date.name">
-          <label>{{item.label}}</label>
-          <input [id]="item.name" [type]="item.type" [placeholder]="item.placeholder" [formControlName]="item.name">
-        </div>
+    <div class="form-field" *ngIf="item.type == dataTypes.stringenum.name">
+      <label>{{ item.label }}</label>
+      <textarea
+        class="form-control"
+        [id]="item.name"
+        [placeholder]="item.placeholder"
+        [formControlName]="item.name"
+        [ngClass]="{ 'field-error': hasErrors(item.name) }"
+        cols="30"
+        rows="8"
+      ></textarea>
+    </div>
 
-        <div class="form-field" *ngIf="item.type==dataTypes.json.name">
-          <label>{{item.label}}</label>
-          <textarea [id]="item.name" [placeholder]="item.placeholder" [formControlName]="item.name" cols="30" rows="8"></textarea>
-        </div>
+    <div class="form-field" *ngIf="item.type == dataTypes.privatefile.name">
+      <label>{{ item.label }}</label>
+      <input
+        class="form-control"
+        type="file"
+        [id]="item.name"
+        [formControlName]="item.name"
+        [ngClass]="{ 'field-error': hasErrors(item.name) }"
+      />
+    </div>
 
-        <div class="form-field" *ngIf="item.type==dataTypes.stringenum.name">
-          <label>{{item.label}}</label>
-          <textarea [id]="item.name" [placeholder]="item.placeholder" [formControlName]="item.name" cols="30" rows="8"></textarea>
-        </div>
+    <div class="form-field" *ngIf="item.type == dataTypes.timespan.name">
+      <label>{{ item.label }}</label>
+      <input
+        class="form-control"
+        [id]="item.name"
+        type="time"
+        [placeholder]="item.placeholder"
+        [formControlName]="item.name"
+        [ngClass]="{ 'field-error': hasErrors(item.name) }"
+      />
+    </div>
 
-        <div class="form-field" *ngIf="item.type==dataTypes.privatefile.name">
-          <label>{{item.label}}</label>
-          <input type="file" [id]="item.name" [formControlName]="item.name">
-        </div>
+    <div class="form-field" *ngIf="item.type == dataTypes.color?.name">
+      <label>{{ item.label }}</label>
+      <div
+        [(colorPicker)]="item.value"
+        [style.background]="item.value"
+        (colorPickerChange)="onChangeColor($event)"
+        class="picker-color"
+      ></div>
+    </div>
+    <label class="error-message" *ngIf="hasErrors(item.name)">{{
+      item.validation.errorMsg
+    }}</label>
 
-        <div class="form-field" *ngIf="item.type==dataTypes.timespan.name">
-          <label>{{item.label}}</label>
-          <input [id]="item.name" type="time" [placeholder]="item.placeholder" [formControlName]="item.name">
-        </div>
-
-      </ng-container>
-    </form>
-
+    <!-- <div class="form-field">
+          <label>{{ item.label }}</label>
+          <div class="row-field">
+            <div
+              [(colorPicker)]="item.value"
+              [style.background]="item.value"
+              [formControlName]="item.name"
+              class="picker-color"
+            ></div>
+            <input
+              [(colorPicker)]="item.value"
+              [id]="item.name"
+              type="text"
+              [placeholder]="item.placeholder"
+              [formControlName]="item.name"
+              [value]="item.value"
+            />
+          </div>
+        </div> -->
+  </ng-container>
+  <!--   <div class="wrapper"></div> -->
+  <div class="footer">
+    <div class="footer-buttons">
+      <button class="btn btn-primary" [disabled]="!formParent?.valid">
+        Save
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        (click)="handleCancel()"
+      >
+        Cancel
+      </button>
+    </div>
   </div>
-  <div class="wrapper">
-    <div><b>The form is valid?: </b>
+</form>
+<!-- <div>
+    <div>
+      <b>The form is valid?: </b>
       <span *ngIf="formParent.valid">✔</span>
       <span *ngIf="!formParent.valid">🔴</span>
     </div>
-    <pre>{{formParent.value | json}}</pre>
-  </div>
-</div>
+    <pre>{{ formParent.value | json }}</pre>
+  </div> -->

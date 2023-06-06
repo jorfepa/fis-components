@@ -1,1 +1,3 @@
-<fgeDynamicField [fieldConfigs]="fieldConfigs" [settingDataTypes]="dataTypes"></fgeDynamicField>
+<div style="width: 30%; height: 600px;">
+    <fgeDynamicField [fieldConfigs]="fieldConfigs" [formDataTypes]="dataTypes" (onSubmit)="submit($event)" (onCancel)="cancel()"></fgeDynamicField>
+</div>

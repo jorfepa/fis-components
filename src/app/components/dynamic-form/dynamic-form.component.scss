@@ -1,0 +1,51 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px;
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+
+    .row-field {
+      display: flex;
+      border: solid 1px #a8a9ad;
+    }
+
+    .picker-color {
+      width: 30px;
+      height: 30px;
+      border: solid 1px #707070;
+      margin: 10px 10px;
+    }
+  }
+
+  .footer {
+    margin-top: auto;
+
+    .footer-buttons {
+      display: flex;
+      justify-content: space-around;
+      padding-top: 20px;
+    }
+  }
+}
+
+.form-control,
+.btn {
+  border-radius: 0;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+}
+
+.field-error {
+  background-color: #fff1f1;
+}
+
+.error-message {
+  font-size: 12px;
+  color: red;
+}
