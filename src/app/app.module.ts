@@ -18,7 +18,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
     FormsModule,
     CommonModule,
     ColorPickerModule,
-    PopoverModule.forRoot()
+    PopoverModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

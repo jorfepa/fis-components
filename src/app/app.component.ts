@@ -111,7 +111,7 @@ export class AppComponent implements OnInit {
       focus: false,
       isStatic: false,
       validation: {
-        errorMsg: 'errorMsg',
+        errorMsg: 'Invalid data',
         validator: [Validators.required],
       },
     },

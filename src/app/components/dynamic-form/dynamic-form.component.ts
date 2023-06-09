@@ -92,7 +92,7 @@ export class DynamicFormComponent implements OnInit {
     }
 
     if (this.dataTypes.color) {
-      this.formParent.get(this.dataTypes.color.name).patchValue('ffffff');
+      this.formParent.get(this.dataTypes.color.name)?.patchValue('ffffff');
     }
 
     setTimeout(() => {

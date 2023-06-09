@@ -136,31 +136,82 @@
         class="picker-color"
       ></div>
     </div>
+
+    <div class="form-field" *ngIf="item.type == dataTypes.text.name">
+      <label>{{ item.label }}</label>
+      <input
+        class="form-control"
+        [id]="item.name"
+        [type]="item.type"
+        [placeholder]="item.placeholder"
+        [formControlName]="item.name"
+        [ngClass]="{ 'field-error': hasErrors(item.name) }"
+      />
+    </div>
+
+    <div class="form-field" *ngIf="item.type == dataTypes.html.name">
+      <label>{{ item.label }}</label>
+      <textarea
+        class="form-control"
+        [id]="item.name"
+        [placeholder]="item.placeholder"
+        [formControlName]="item.name"
+        [ngClass]="{ 'field-error': hasErrors(item.name) }"
+        cols="30"
+        rows="8"
+      ></textarea>
+    </div>
+
+    <div class="form-field" *ngIf="item.type == dataTypes.image.name">
+      <label>{{ item.label }}</label>
+      <input
+        class="form-control"
+        type="file"
+        [id]="item.name"
+        [formControlName]="item.name"
+        [ngClass]="{ 'field-error': hasErrors(item.name) }"
+      />
+    </div>
+
+    <div class="form-field" *ngIf="item.type == dataTypes.document.name">
+      <label>{{ item.label }}</label>
+      <input
+        class="form-control"
+        type="file"
+        [id]="item.name"
+        [formControlName]="item.name"
+        [ngClass]="{ 'field-error': hasErrors(item.name) }"
+      />
+    </div>
+
+    <div class="form-field" *ngIf="item.type == dataTypes.email.name">
+      <label>{{ item.label }}</label>
+      <input
+        class="form-control"
+        [id]="item.name"
+        [type]="item.type"
+        [placeholder]="item.placeholder"
+        [formControlName]="item.name"
+        [ngClass]="{ 'field-error': hasErrors(item.name) }"
+      />
+    </div>
+
+    <div class="form-field" *ngIf="item.type == dataTypes.video.name">
+      <label>{{ item.label }}</label>
+      <input
+        class="form-control"
+        type="file"
+        [id]="item.name"
+        [formControlName]="item.name"
+        [ngClass]="{ 'field-error': hasErrors(item.name) }"
+      />
+    </div>
+
     <label class="error-message" *ngIf="hasErrors(item.name)">{{
       item.validation.errorMsg
     }}</label>
-
-    <!-- <div class="form-field">
-          <label>{{ item.label }}</label>
-          <div class="row-field">
-            <div
-              [(colorPicker)]="item.value"
-              [style.background]="item.value"
-              [formControlName]="item.name"
-              class="picker-color"
-            ></div>
-            <input
-              [(colorPicker)]="item.value"
-              [id]="item.name"
-              type="text"
-              [placeholder]="item.placeholder"
-              [formControlName]="item.name"
-              [value]="item.value"
-            />
-          </div>
-        </div> -->
   </ng-container>
-  <!--   <div class="wrapper"></div> -->
+
   <div class="footer">
     <div class="footer-buttons">
       <button class="btn btn-primary" [disabled]="!formParent?.valid">

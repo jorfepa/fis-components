@@ -63,6 +63,48 @@
                 "name": "Timespan",
                 "validationPattern": null,
                 "_links": []
+            },
+            {
+                "id": 10,
+                "name": "Text",
+                "validationPattern": null,
+                "_links": []
+            },
+            {
+                "id": 11,
+                "name": "Color",
+                "validationPattern": null,
+                "_links": []
+            },
+            {
+                "id": 12,
+                "name": "Html",
+                "validationPattern": null,
+                "_links": []
+            },
+            {
+                "id": 13,
+                "name": "Image",
+                "validationPattern": null,
+                "_links": []
+            },
+            {
+                "id": 14,
+                "name": "Document",
+                "validationPattern": null,
+                "_links": []
+            },
+            {
+                "id": 15,
+                "name": "Email",
+                "validationPattern": "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
+                "_links": []
+            },
+            {
+                "id": 16,
+                "name": "Video",
+                "validationPattern": null,
+                "_links": []
             }
         ],
         "offset": 0,
