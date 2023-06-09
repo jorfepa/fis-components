@@ -1,0 +1,14 @@
+.dropdown-menu {
+    border-radius: 0;
+}
+
+.dropdown-button {
+    background-color: transparent;
+    border: none;
+}
+
+.dropdown-button:active,
+.dropdown-button:focus {
+    background-color: transparent;
+    border: dotted 1px black;
+}

@@ -14,6 +14,17 @@ export class AppComponent implements OnInit {
   dataTypes = settingDataTypes.data.items;
   types: string[] = [];
 
+  clickEditMenu() {
+    console.log('Edit');
+  }
+
+  clickDeleteMenu() {
+    console.log('Delete');
+  }
+  clickAddMenu() {
+    console.log('Add');
+  }
+
   ngOnInit(): void {
     settingDataTypes.data.items.forEach((type) => {
       this.types.push(type.name);

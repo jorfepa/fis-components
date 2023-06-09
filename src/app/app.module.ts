@@ -10,9 +10,10 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { CrudMenuComponent } from './components/crud-menu/crud-menu.component';
 
 @NgModule({
-  declarations: [AppComponent, DynamicFormComponent],
+  declarations: [AppComponent, DynamicFormComponent, CrudMenuComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
