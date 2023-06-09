@@ -1,3 +1,9 @@
-<div style="width: 30%; height: 600px;">
-    <fgeDynamicField [fieldConfigs]="fieldConfigs" [formDataTypes]="dataTypes" (onSubmit)="submit($event)" (onCancel)="cancel()"></fgeDynamicField>
-</div>
+<div class="btn-group" dropdown>    
+    <button dropdownToggle class="dropdown-button"><i class="bi bi-three-dots-vertical"></i></button>    
+    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+        role="menu" aria-labelledby="button-basic">
+        <li role="menuitem"><a class="dropdown-item" href="#">Edit</a></li>
+        <li role="menuitem"><a class="dropdown-item" href="#">Delete</a></li>
+        <li role="menuitem"><a class="dropdown-item" href="#">Add New Feature</a></li>
+    </ul>
+  </div>
