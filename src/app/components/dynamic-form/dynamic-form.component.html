@@ -1,230 +1,241 @@
 <form class="form" [formGroup]="formParent" (submit)="handleSubmit()">
-  <ng-container *ngFor="let item of fieldConfigs">
-    <div class="form-field" *ngIf="item.type == dataTypes.string.name">
-      <label>{{ item.label }}</label>
-      <input
-        class="form-control"
-        [id]="item.name"
-        [type]="item.type"
-        [placeholder]="item.placeholder"
-        [formControlName]="item.name"
-        [ngClass]="{ 'field-error': hasErrors(item.name) }"
-      />
-    </div>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{title}}</h4>
+    <button
+      type="button"
+      class="close-button"
+      aria-label="Close"
+      (click)="onClose.emit()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ng-container *ngFor="let item of fieldConfigs">
+      <div class="form-field" *ngIf="item.type == dataTypes.string.name">
+        <label>{{ item.label }}</label>
+        <input
+          class="form-control"
+          [id]="item.name"
+          [type]="item.type"
+          [placeholder]="item.placeholder"
+          [formControlName]="item.name"
+          [ngClass]="{ 'field-error': hasErrors(item.name) }"
+        />
+      </div>
 
-    <div class="form-field" *ngIf="item.type == 'Select'">
-      <label>{{ item.label }}</label>
-      <select
-        class="form-select"
-        [id]="item.name"
-        [formControlName]="item.name"
-        [ngClass]="{ 'field-error': hasErrors(item.name) }"
-        placeholder="Select an Item"
-        (change)="onDataTypeChange($event)"
-      >
-        <ng-container *ngFor="let option of item.options">
-          <option [value]="option">{{ option }}</option>
-        </ng-container>
-      </select>
-    </div>
+      <div class="form-field" *ngIf="item.type == 'Select'">
+        <label>{{ item.label }}</label>
+        <select
+          class="form-select"
+          [id]="item.name"
+          [formControlName]="item.name"
+          [ngClass]="{ 'field-error': hasErrors(item.name) }"
+          placeholder="Select an Item"
+          (change)="onDataTypeChange($event)"
+        >
+          <ng-container *ngFor="let option of item.options">
+            <option [value]="option">{{ option }}</option>
+          </ng-container>
+        </select>
+      </div>
 
-    <div class="form-field" *ngIf="item.type == dataTypes.boolean.name">
-      <label>{{ item.label }}</label>
-      <select
-        class="form-select"
-        [id]="item.name"
-        [formControlName]="item.name"
-        placeholder="Select an Item"
-        [ngClass]="{ 'field-error': hasErrors(item.name) }"
-      >
-        <option [value]="true">true</option>
-        <option [value]="false">false</option>
-      </select>
-    </div>
+      <div class="form-field" *ngIf="item.type == dataTypes.boolean.name">
+        <label>{{ item.label }}</label>
+        <select
+          class="form-select"
+          [id]="item.name"
+          [formControlName]="item.name"
+          placeholder="Select an Item"
+          [ngClass]="{ 'field-error': hasErrors(item.name) }"
+        >
+          <option [value]="true">true</option>
+          <option [value]="false">false</option>
+        </select>
+      </div>
 
-    <div class="form-field" *ngIf="item.type == dataTypes.integer.name">
-      <label>{{ item.label }}</label>
-      <input
-        class="form-control"
-        [id]="item.name"
-        [type]="item.type"
-        [placeholder]="item.placeholder"
-        [formControlName]="item.name"
-        [ngClass]="{ 'field-error': hasErrors(item.name) }"
-      />
-    </div>
+      <div class="form-field" *ngIf="item.type == dataTypes.integer.name">
+        <label>{{ item.label }}</label>
+        <input
+          class="form-control"
+          [id]="item.name"
+          [type]="item.type"
+          [placeholder]="item.placeholder"
+          [formControlName]="item.name"
+          [ngClass]="{ 'field-error': hasErrors(item.name) }"
+        />
+      </div>
 
-    <div class="form-field" *ngIf="item.type == dataTypes.decimal.name">
-      <label>{{ item.label }}</label>
-      <input
-        class="form-control"
-        [id]="item.name"
-        [type]="item.type"
-        [placeholder]="item.placeholder"
-        [formControlName]="item.name"
-        [ngClass]="{ 'field-error': hasErrors(item.name) }"
-      />
-    </div>
+      <div class="form-field" *ngIf="item.type == dataTypes.decimal.name">
+        <label>{{ item.label }}</label>
+        <input
+          class="form-control"
+          [id]="item.name"
+          [type]="item.type"
+          [placeholder]="item.placeholder"
+          [formControlName]="item.name"
+          [ngClass]="{ 'field-error': hasErrors(item.name) }"
+        />
+      </div>
 
-    <div class="form-field" *ngIf="item.type == dataTypes.date.name">
-      <label>{{ item.label }}</label>
-      <input
-        class="form-control"
-        [id]="item.name"
-        [type]="item.type"
-        [placeholder]="item.placeholder"
-        [formControlName]="item.name"
-        [ngClass]="{ 'field-error': hasErrors(item.name) }"
-      />
-    </div>
+      <div class="form-field" *ngIf="item.type == dataTypes.date.name">
+        <label>{{ item.label }}</label>
+        <input
+          class="form-control"
+          [id]="item.name"
+          [type]="item.type"
+          [placeholder]="item.placeholder"
+          [formControlName]="item.name"
+          [ngClass]="{ 'field-error': hasErrors(item.name) }"
+        />
+      </div>
 
-    <div class="form-field" *ngIf="item.type == dataTypes.json.name">
-      <label>{{ item.label }}</label>
-      <textarea
-        class="form-control"
-        [id]="item.name"
-        [placeholder]="item.placeholder"
-        [formControlName]="item.name"
-        [ngClass]="{ 'field-error': hasErrors(item.name) }"
-        cols="30"
-        rows="8"
-      ></textarea>
-    </div>
+      <div class="form-field" *ngIf="item.type == dataTypes.json.name">
+        <label>{{ item.label }}</label>
+        <textarea
+          class="form-control"
+          [id]="item.name"
+          [placeholder]="item.placeholder"
+          [formControlName]="item.name"
+          [ngClass]="{ 'field-error': hasErrors(item.name) }"
+          cols="30"
+          rows="8"
+        ></textarea>
+      </div>
 
-    <div class="form-field" *ngIf="item.type == dataTypes.stringenum.name">
-      <label>{{ item.label }}</label>
-      <textarea
-        class="form-control"
-        [id]="item.name"
-        [placeholder]="item.placeholder"
-        [formControlName]="item.name"
-        [ngClass]="{ 'field-error': hasErrors(item.name) }"
-        cols="30"
-        rows="8"
-      ></textarea>
-    </div>
+      <div class="form-field" *ngIf="item.type == dataTypes.stringenum.name">
+        <label>{{ item.label }}</label>
+        <textarea
+          class="form-control"
+          [id]="item.name"
+          [placeholder]="item.placeholder"
+          [formControlName]="item.name"
+          [ngClass]="{ 'field-error': hasErrors(item.name) }"
+          cols="30"
+          rows="8"
+        ></textarea>
+      </div>
 
-    <div class="form-field" *ngIf="item.type == dataTypes.privatefile.name">
-      <label>{{ item.label }}</label>
-      <input
-        class="form-control"
-        type="file"
-        [id]="item.name"
-        [formControlName]="item.name"
-        [ngClass]="{ 'field-error': hasErrors(item.name) }"
-      />
-    </div>
+      <div class="form-field" *ngIf="item.type == dataTypes.privatefile.name">
+        <label>{{ item.label }}</label>
+        <input
+          class="form-control"
+          type="file"
+          [id]="item.name"
+          [formControlName]="item.name"
+          [ngClass]="{ 'field-error': hasErrors(item.name) }"
+        />
+      </div>
 
-    <div class="form-field" *ngIf="item.type == dataTypes.timespan.name">
-      <label>{{ item.label }}</label>
-      <input
-        class="form-control"
-        [id]="item.name"
-        type="time"
-        [placeholder]="item.placeholder"
-        [formControlName]="item.name"
-        [ngClass]="{ 'field-error': hasErrors(item.name) }"
-      />
-    </div>
+      <div class="form-field" *ngIf="item.type == dataTypes.timespan.name">
+        <label>{{ item.label }}</label>
+        <input
+          class="form-control"
+          [id]="item.name"
+          type="time"
+          [placeholder]="item.placeholder"
+          [formControlName]="item.name"
+          [ngClass]="{ 'field-error': hasErrors(item.name) }"
+        />
+      </div>
 
-    <div class="form-field" *ngIf="item.type == dataTypes.color?.name">
-      <label>{{ item.label }}</label>
-      <div
-        [(colorPicker)]="item.value"
-        [style.background]="item.value"
-        (colorPickerChange)="onChangeColor($event)"
-        class="picker-color"
-      ></div>
-    </div>
+      <div class="form-field" *ngIf="item.type == dataTypes.color?.name">
+        <label>{{ item.label }}</label>
+        <div
+          [(colorPicker)]="item.value"
+          [style.background]="item.value"
+          (colorPickerChange)="onChangeColor($event)"
+          class="picker-color"
+        ></div>
+      </div>
 
-    <div class="form-field" *ngIf="item.type == dataTypes.text.name">
-      <label>{{ item.label }}</label>
-      <input
-        class="form-control"
-        [id]="item.name"
-        [type]="item.type"
-        [placeholder]="item.placeholder"
-        [formControlName]="item.name"
-        [ngClass]="{ 'field-error': hasErrors(item.name) }"
-      />
-    </div>
+      <div class="form-field" *ngIf="item.type == dataTypes.text.name">
+        <label>{{ item.label }}</label>
+        <input
+          class="form-control"
+          [id]="item.name"
+          [type]="item.type"
+          [placeholder]="item.placeholder"
+          [formControlName]="item.name"
+          [ngClass]="{ 'field-error': hasErrors(item.name) }"
+        />
+      </div>
 
-    <div class="form-field" *ngIf="item.type == dataTypes.html.name">
-      <label>{{ item.label }}</label>
-      <textarea
-        class="form-control"
-        [id]="item.name"
-        [placeholder]="item.placeholder"
-        [formControlName]="item.name"
-        [ngClass]="{ 'field-error': hasErrors(item.name) }"
-        cols="30"
-        rows="8"
-      ></textarea>
-    </div>
+      <div class="form-field" *ngIf="item.type == dataTypes.html.name">
+        <label>{{ item.label }}</label>
+        <textarea
+          class="form-control"
+          [id]="item.name"
+          [placeholder]="item.placeholder"
+          [formControlName]="item.name"
+          [ngClass]="{ 'field-error': hasErrors(item.name) }"
+          cols="30"
+          rows="8"
+        ></textarea>
+      </div>
 
-    <div class="form-field" *ngIf="item.type == dataTypes.image.name">
-      <label>{{ item.label }}</label>
-      <input
-        class="form-control"
-        type="file"
-        [id]="item.name"
-        [formControlName]="item.name"
-        [ngClass]="{ 'field-error': hasErrors(item.name) }"
-      />
-    </div>
+      <div class="form-field" *ngIf="item.type == dataTypes.image.name">
+        <label>{{ item.label }}</label>
+        <input
+          class="form-control"
+          type="file"
+          [id]="item.name"
+          [formControlName]="item.name"
+          [ngClass]="{ 'field-error': hasErrors(item.name) }"
+        />
+      </div>
 
-    <div class="form-field" *ngIf="item.type == dataTypes.document.name">
-      <label>{{ item.label }}</label>
-      <input
-        class="form-control"
-        type="file"
-        [id]="item.name"
-        [formControlName]="item.name"
-        [ngClass]="{ 'field-error': hasErrors(item.name) }"
-      />
-    </div>
+      <div class="form-field" *ngIf="item.type == dataTypes.document.name">
+        <label>{{ item.label }}</label>
+        <input
+          class="form-control"
+          type="file"
+          [id]="item.name"
+          [formControlName]="item.name"
+          [ngClass]="{ 'field-error': hasErrors(item.name) }"
+        />
+      </div>
 
-    <div class="form-field" *ngIf="item.type == dataTypes.email.name">
-      <label>{{ item.label }}</label>
-      <input
-        class="form-control"
-        [id]="item.name"
-        [type]="item.type"
-        [placeholder]="item.placeholder"
-        [formControlName]="item.name"
-        [ngClass]="{ 'field-error': hasErrors(item.name) }"
-      />
-    </div>
+      <div class="form-field" *ngIf="item.type == dataTypes.email.name">
+        <label>{{ item.label }}</label>
+        <input
+          class="form-control"
+          [id]="item.name"
+          [type]="item.type"
+          [placeholder]="item.placeholder"
+          [formControlName]="item.name"
+          [ngClass]="{ 'field-error': hasErrors(item.name) }"
+        />
+      </div>
 
-    <div class="form-field" *ngIf="item.type == dataTypes.video.name">
-      <label>{{ item.label }}</label>
-      <input
-        class="form-control"
-        type="file"
-        [id]="item.name"
-        [formControlName]="item.name"
-        [ngClass]="{ 'field-error': hasErrors(item.name) }"
-      />
-    </div>
+      <div class="form-field" *ngIf="item.type == dataTypes.video.name">
+        <label>{{ item.label }}</label>
+        <input
+          class="form-control"
+          type="file"
+          [id]="item.name"
+          [formControlName]="item.name"
+          [ngClass]="{ 'field-error': hasErrors(item.name) }"
+        />
+      </div>
 
-    <label class="error-message" *ngIf="hasErrors(item.name)">{{
-      item.validation.errorMsg
-    }}</label>
-  </ng-container>
+      <label class="error-message" *ngIf="hasErrors(item.name)">{{
+        item.validation.errorMsg
+      }}</label>
+    </ng-container>
+  </div>
 
-  <div class="footer">
-    <div class="footer-buttons">
-      <button class="btn btn-primary" [disabled]="!formParent?.valid">
-        Save
-      </button>
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        (click)="handleCancel()"
-      >
-        Cancel
-      </button>
-    </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary me-5" [disabled]="!formParent?.valid">
+      Save
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="handleCancel()"
+    >
+      Cancel
+    </button>
   </div>
 </form>
 <!-- <div>

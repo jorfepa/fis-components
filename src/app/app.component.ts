@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FieldConfig } from './components/dynamic-form/models/field-config.model';
 import { Validators } from '@angular/forms';
 
-import settingsData from './settings.json';
 import settingDataTypes from './dataTypes.json';
+import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
+import { DynamicFormComponent } from './components';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +15,12 @@ import settingDataTypes from './dataTypes.json';
 export class AppComponent implements OnInit {
   dataTypes = settingDataTypes.data.items;
   types: string[] = [];
+  bsModalRef?: BsModalRef;
+  constructor(private modalService: BsModalService, private toastr: ToastrService) {}
 
   clickEditMenu() {
     console.log('Edit');
+    this.openModalWithComponent();
   }
 
   clickDeleteMenu() {
@@ -23,6 +28,38 @@ export class AppComponent implements OnInit {
   }
   clickAddMenu() {
     console.log('Add');
+    this.toastr.success('This is good');
+    setTimeout(() => {
+      this.toastr.info('This is good');      
+    }, 1000);
+    setTimeout(() => {
+      this.toastr.warning('This is good');      
+    }, 2000);
+    setTimeout(() => {
+      this.toastr.error('This is good');      
+    }, 3000);
+  }
+
+  openModalWithComponent() {
+    const initialState: ModalOptions = {
+      initialState: {
+        title: 'Edit Group',
+        formDataTypes: this.dataTypes,
+        fieldConfigs: this.fieldConfigs,
+      },
+      class: 'right-modal',
+    };
+    this.bsModalRef = this.modalService.show(
+      DynamicFormComponent,
+      initialState
+    );
+    this.bsModalRef.content.onSubmit.subscribe((data) => {
+      console.log(data);
+      this.bsModalRef.hide();
+    });
+    this.bsModalRef.content.onClose.subscribe(() => {
+      this.bsModalRef.hide();
+    });
   }
 
   ngOnInit(): void {
@@ -60,70 +97,19 @@ export class AppComponent implements OnInit {
   fieldConfigs: FieldConfig[] = [
     {
       disabled: false,
-      label: 'Name',
+      label: 'Feature Name',
       name: 'name',
       options: [],
-      placeholder: 'Name',
+      placeholder: 'Feature Name',
       type: 'String',
-      value: 'John Doe',
+      value: '',
       src: '',
       filename: '',
       focus: true,
       isStatic: true,
       validation: {
-        errorMsg: 'Name is required',
-        validator: [Validators.required],
-      },
-    },
-    {
-      disabled: false,
-      label: 'Description',
-      name: 'description',
-      options: [],
-      placeholder: 'Description',
-      type: 'String',
-      value: 'Description valu',
-      src: '',
-      filename: '',
-      focus: false,
-      isStatic: true,
-      validation: {
-        errorMsg: 'Description is required',
-        validator: [Validators.required],
-      },
-    },
-    {
-      disabled: false,
-      label: 'Data Type',
-      name: 'dataType',
-      options: this.types,
-      placeholder: 'Choose data type',
-      type: 'Select',
-      value: 'String',
-      src: '',
-      filename: '',
-      focus: false,
-      isStatic: true,
-      validation: {
-        errorMsg: 'You must select a data type',
+        errorMsg: 'Feature Name is required',
         validator: [],
-      },
-    },
-    {
-      disabled: false,
-      label: 'Editor',
-      name: 'String',
-      options: [],
-      placeholder: 'setting name',
-      type: 'String',
-      value: '',
-      src: '',
-      filename: '',
-      focus: false,
-      isStatic: false,
-      validation: {
-        errorMsg: 'Invalid data',
-        validator: [Validators.required],
       },
     },
   ];

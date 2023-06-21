@@ -16,6 +16,7 @@ import {
 } from '@angular/core';
 import { FieldConfig } from './models/field-config.model';
 import _ from 'lodash';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'fgeDynamicField',
@@ -26,8 +27,9 @@ import _ from 'lodash';
 export class DynamicFormComponent implements OnInit {
   @Input() fieldConfigs: FieldConfig[] = [];
   @Input() formDataTypes: any[] = [];
+  @Input() title: string = '';
   @Output() readonly onSubmit: EventEmitter<any> = new EventEmitter<any>();
-  @Output() readonly onCancel: EventEmitter<any> = new EventEmitter<any>();
+  @Output() readonly onClose: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChildren('formField') refFormField: ElementRef;
 
@@ -37,7 +39,7 @@ export class DynamicFormComponent implements OnInit {
   selectedDataType: any;
   dataTypes: any;
 
-  constructor() {}
+  constructor(private modalService: BsModalService) {}
 
   ngOnInit(): void {
     this.dataTypes = this.formDataTypes.reduce((acc, item) => {
@@ -116,7 +118,7 @@ export class DynamicFormComponent implements OnInit {
   }
 
   handleCancel() {
-    this.onCancel.emit();
+    this.onClose.emit();
   }
 
   hasErrors(name) {

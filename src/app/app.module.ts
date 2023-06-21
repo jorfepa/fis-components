@@ -7,10 +7,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DynamicFormComponent } from './components';
 import { CommonModule } from '@angular/common';
 import { ColorPickerModule } from 'ngx-color-picker';
-import { PopoverModule } from 'ngx-bootstrap/popover';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { CrudMenuComponent } from './components/crud-menu/crud-menu.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent, DynamicFormComponent, CrudMenuComponent],
@@ -21,9 +22,12 @@ import { CrudMenuComponent } from './components/crud-menu/crud-menu.component';
     FormsModule,
     CommonModule,
     ColorPickerModule,
-    PopoverModule.forRoot(),
     BrowserAnimationsModule,
-    BsDropdownModule.forRoot()
+    ToastrModule.forRoot({
+      timeOut: 3000
+    }),
+    BsDropdownModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent],
